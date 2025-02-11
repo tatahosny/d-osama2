@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقييم الأداء</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2>M - SoftTech</h2>
+            <ul>
+                <li><a href="index.html">🏠 الرئيسية</a></li>
+                <li><a href="users.html">👥 إدارة المستخدمين</a></li>
+                <li><a href="tasks.html">📝 إدارة المهام</a></li>
+                <li><a href="performance.html">📊 تقييم الأداء</a></li>
+                <li><a href="settings.html">⚙️ الإعدادات</a></li>
+                <li><a href="support.html">📞 الدعم</a></li>
+                <li class="logout"><a href="#">🚪 تسجيل الخروج</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1>تقييم الأداء</h1>
+            </header>
+
+            <section class="chart-container">
+                <canvas id="performanceChart"></canvas>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('performanceChart').getContext('2d');
+        var performanceChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['دكتور', 'معيد', 'مندوب دفعة', 'مندوب سكشن'],
+                datasets: [{
+                    label: 'عدد المهام المكتملة',
+                    data: [10, 15, 8, 20],
+                    backgroundColor: ['red', 'blue', 'green', 'purple']
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

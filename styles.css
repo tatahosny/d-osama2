@@ -1,0 +1,685 @@
+/* 🌍 إعادة تعيين القيم الافتراضية */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Tajawal", sans-serif;
+}
+
+/* ✅ إعدادات الخلفية العامة */
+body {
+    background-color: #F1F3F6;
+    direction: rtl;
+}
+
+/* 🏠 الحاوية الرئيسية */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* 🎨 الشريط الجانبي مع المنحنى العكسي */
+.sidebar {
+    width: 280px;
+    background: #2F6D5A;
+    color: white;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+/* ✅ إضافة تأثير المنحنى العكسي */
+.sidebar::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 80px;
+    background: #F1F3F6;
+    border-top-left-radius: 80px;
+    box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 🔹 محتوى القائمة */
+.sidebar h2 {
+    font-size: 22px;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 10;
+}
+
+.sidebar ul {
+    list-style: none;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+}
+
+.sidebar ul li {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 6px 0;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.sidebar ul li:hover {
+    background: #255748;
+    transform: scale(1.05);
+}
+
+/* ✨ تحسين تسجيل الخروج */
+.logout {
+    margin-top: auto;
+    background: #C62828;
+}
+
+.logout:hover {
+    background: #B71C1C;
+}
+
+/* 📌 المحتوى الرئيسي */
+.main-content {
+    flex: 1;
+    padding: 25px;
+    position: relative;
+    z-index: 5;
+}
+
+/* 🔝 شريط العنوان */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 📜 بيانات المستخدم */
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 10px;
+    border: 2px solid #2F6D5A;
+}
+
+/* 📝 البطاقات */
+.cards {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    flex: 1;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* 🎨 نافذة إضافة المهمة */
+.modal {
+    display: none; /* ✅ مخفية عند تحميل الصفحة */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out; /* ✅ تأثير عند الفتح */
+}
+
+/* 🔹 زر الإغلاق */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #d32f2f;
+    transition: color 0.3s ease-in-out;
+}
+
+.close:hover {
+    color: #b71c1c;
+}
+
+/* 🔹 تحسين زر "إضافة مهمة" */
+#addTaskBtn {
+    background: #2F6D5A;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+#addTaskBtn:hover {
+    background: #255748;
+    transform: translateY(-3px);
+}
+
+/* 🔹 تنسيق الحقول */
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* 🔹 تأثير عند الفتح */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); } 
+}
+
+/* ✅ تحسين تجاوب القائمة الجانبية */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        text-align: center;
+    }
+
+    .cards, .overview {
+        flex-direction: column;
+    }
+
+    .card {
+        width: 100%;
+    }
+}
+
+/* ✅ تحسين النافذة المنبثقة على الجوال */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .modal-content input,
+    .modal-content textarea,
+    .modal-content select {
+        font-size: 14px;
+    }
+}
+
+/* ✅ إضافة تأثير عند تحريك الفأرة فوق البطاقات */
+.card, .performance, .chart, .activity {
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover, .performance:hover, .chart:hover, .activity:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* ✅ تأثير عند فتح النافذة */
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    animation: slideIn 0.3s ease-in-out;
+}
+/* 🎯 زر الحصول على المهمة */
+.get-task-btn {
+    background: #2F6D5A;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.get-task-btn:hover {
+    background: #255748;
+    transform: scale(1.05);
+}
+
+/* 🔹 تحسين مظهر المهام في ملف المستخدم */
+.user-tasks {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.user-tasks h3 {
+    color: #2F6D5A;
+    margin-bottom: 10px;
+}
+/* ✅ تحسين تصميم قائمة المهام */
+.task-list, .user-tasks {
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2, h3 {
+    text-align: center;
+    color: #2F6D5A;
+    margin-bottom: 15px;
+}
+
+/* ✅ تحسين تصميم البطاقات */
+.task-card {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-left: 5px solid #2F6D5A;
+    transition: transform 0.2s ease-in-out;
+}
+
+.task-card:hover {
+    transform: translateY(-3px);
+}
+
+/* ✅ تحسين عرض اسم المهمة */
+.task-card h4 {
+    font-size: 18px;
+    color: #2F6D5A;
+    margin-bottom: 8px;
+}
+
+/* ✅ تحسين وصف المهمة */
+.task-card p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 12px;
+}
+
+/* ✅ تحسين زر "الحصول على المهمة" */
+.get-task-btn {
+    background: #2F6D5A;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease-in-out;
+    align-self: flex-end;
+}
+
+.get-task-btn:hover {
+    background: #255748;
+}
+
+/* ✅ تحسين عرض قائمة المهام الخاصة بالمستخدم */
+.user-tasks {
+    margin-top: 30px;
+}
+
+.user-task-card {
+    background: #E3F2FD;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 5px solid #0277BD;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-task-card h4 {
+    font-size: 16px;
+    color: #01579B;
+    margin-bottom: 5px;
+}
+
+.user-task-card p {
+    font-size: 14px;
+    color: #333;
+}
+/* ✅ تحسين تصميم النافذة المنبثقة */
+.modal {
+    display: none; /* ❌ تأكد من أن النافذة مخفية عند تحميل الصفحة */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 350px;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+    color: red;
+}
+/* 🌍 إعادة تعيين القيم الافتراضية */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Tajawal", sans-serif;
+}
+
+/* ✅ إعدادات الخلفية العامة */
+body {
+    background-color: #F1F3F6;
+    direction: rtl;
+}
+
+/* 🏠 الحاوية الرئيسية */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* 🎨 الشريط الجانبي */
+.sidebar {
+    width: 280px;
+    background: #2F6D5A;
+    color: white;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: fadeInSidebar 0.5s ease-in-out;
+}
+
+/* ✅ تأثير ظهور الشريط الجانبي */
+@keyframes fadeInSidebar {
+    from { transform: translateX(-30px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* ✅ تحسين مظهر القائمة */
+.sidebar ul {
+    list-style: none;
+    width: 100%;
+}
+
+.sidebar ul li {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 6px 0;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.sidebar ul li:hover {
+    background: #255748;
+    transform: scale(1.05);
+}
+
+/* ✅ تحسين زر تسجيل الخروج */
+.logout {
+    margin-top: auto;
+    background: #C62828;
+}
+
+.logout:hover {
+    background: #B71C1C;
+}
+
+/* 📌 المحتوى الرئيسي */
+.main-content {
+    flex: 1;
+    padding: 25px;
+}
+
+/* 🔝 شريط العنوان */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 📜 بيانات المستخدم */
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 10px;
+    border: 2px solid #2F6D5A;
+}
+
+/* 📝 البطاقات */
+.cards {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    flex: 1;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* 🎨 نافذة إضافة المهمة */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    text-align: center;
+    animation: popUp 0.3s ease-in-out;
+}
+
+/* ✅ تأثير عند فتح النافذة */
+@keyframes popUp {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* 🔹 زر الإغلاق */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+    color: red;
+}
+
+/* ✅ تحسين الأزرار */
+button {
+    background: #2F6D5A;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+button:hover {
+    background: #255748;
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+
+/* ✅ تحسين زر تحميل المهمة */
+button.loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+button.loading::after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border: 3px solid white;
+    border-top-color: transparent;
+    border-radius: 50%;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: translateY(-50%) rotate(0deg); }
+    to { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* ✅ تحسين عرض قائمة المهام */
+.task-list {
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.task-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    border-left: 5px solid #2F6D5A;
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.task-card:hover {
+    transform: translateY(-3px);
+    background: rgba(47, 109, 90, 0.1);
+}
+
+/* ✅ تحسين استجابة التصميم */
+@media (max-width: 768px) {
+    .dashboard-container { flex-direction: column; }
+    .sidebar { width: 100%; text-align: center; }
+    .cards, .overview { flex-direction: column; }
+    .card { width: 100%; }
+}
+
+@media (max-width: 500px) {
+    .main-content { padding: 15px; }
+    .modal-content { width: 90%; }
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2>M - SoftTech</h2>
+            <ul>
+                <li><a href="index.html">🏠 الرئيسية</a></li>
+                <li><a href="users.html">👥 إدارة المستخدمين</a></li>
+                <li><a href="tasks.html">📝 إدارة المهام</a></li>
+                <li><a href="performance.html">📊 تقييم الأداء</a></li>
+                <li><a href="settings.html">⚙️ الإعدادات</a></li>
+                <li><a href="support.html">📞 الدعم</a></li>
+                <li class="logout"><a href="#">🚪 تسجيل الخروج</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1>الإعدادات</h1>
+            </header>
+
+            <section class="settings-container">
+                <h2>معلومات الحساب</h2>
+
+                <!-- صورة المستخدم -->
+                <div class="profile-image">
+                    <img id="userAvatar" src="default-avatar.png" alt="الصورة الافتراضية">
+                    <input type="file" id="uploadAvatar" accept="image/*">
+                </div>
+
+                <!-- اسم المستخدم -->
+                <label for="username">اسم المستخدم</label>
+                <input type="text" id="username" placeholder="أدخل اسم المستخدم">
+
+                <!-- صلاحية المستخدم -->
+                <label>الصلاحية:</label>
+                <span id="userRole">مندوب دفعة</span>
+
+                <!-- كلمة المرور -->
+                <h2>تغيير كلمة المرور</h2>
+                <label for="newPassword">كلمة المرور الجديدة</label>
+                <input type="password" id="newPassword" placeholder="كلمة المرور الجديدة">
+
+                <label for="confirmPassword">تأكيد كلمة المرور</label>
+                <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور">
+
+                <button onclick="saveSettings()">💾 حفظ التغييرات</button>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // تغيير صورة الحساب
+        document.getElementById('uploadAvatar').addEventListener('change', function(event) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('userAvatar').src = e.target.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+
+        // حفظ الإعدادات
+        function saveSettings() {
+            let username = document.getElementById("username").value;
+            let newPassword = document.getElementById("newPassword").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (newPassword !== confirmPassword) {
+                alert("❌ خطأ! كلمة المرور غير متطابقة.");
+                return;
+            }
+
+            alert("✅ تم حفظ الإعدادات بنجاح!");
+        }
+    </script>
+
+</body>
+</html>

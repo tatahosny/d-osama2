@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body class="login-body">
+
+    <div class="login-container">
+        <h2>🔑 تسجيل الدخول</h2>
+        <p>مرحبًا بك! الرجاء إدخال بياناتك</p>
+        
+        <form id="loginForm">
+            <label for="username">👤 اسم المستخدم:</label>
+            <input type="text" id="username" placeholder="أدخل اسم المستخدم" required>
+
+            <label for="password">🔒 كلمة المرور:</label>
+            <input type="password" id="password" placeholder="••••••••" required>
+
+            <button type="submit">تسجيل الدخول</button>
+
+            <p id="errorMessage" class="error"></p>
+        </form>
+
+        <p class="info">💡 إذا لم يكن لديك حساب، تواصل مع المسؤول.</p>
+    </div>
+
+    <script src="../assets/js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المستخدمين</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2>M - SoftTech</h2>
+            <ul>
+                <li><a href="index.html">🏠 الرئيسية</a></li>
+                <li><a href="users.html" class="active">👥 إدارة المستخدمين</a></li>
+                <li><a href="tasks.html">📝 إدارة المهام</a></li>
+                <li><a href="performance.html">📊 تقييم الأداء</a></li>
+                <li><a href="settings.html">⚙️ الإعدادات</a></li>
+                <li><a href="support.html">📞 الدعم</a></li>
+                <li class="logout"><a href="#">🚪 تسجيل الخروج</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1>إدارة المستخدمين</h1>
+                <button id="openUserModal">➕ إضافة مستخدم جديد</button>
+            </header>
+
+            <section class="user-list">
+                <h2>قائمة المستخدمين</h2>
+                <div id="users-container">
+                    <p>📌 لا يوجد مستخدمون حتى الآن.</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- 🔹 نافذة منبثقة لإضافة مستخدم جديد -->
+        <div id="userModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>إضافة مستخدم جديد</h2>
+
+                <label for="userName">👤 اسم المستخدم:</label>
+                <input type="text" id="userName" placeholder="أدخل الاسم الكامل" required>
+
+                <label for="userEmail">📧 البريد الإلكتروني:</label>
+                <input type="email" id="userEmail" placeholder="example@email.com" required>
+
+                <label for="userId">🎓 رقم الجلوس:</label>
+                <input type="number" id="userId" placeholder="أدخل رقم الجلوس" required>
+
+                <label for="userPassword">🔑 كلمة المرور:</label>
+                <input type="password" id="userPassword" placeholder="•••••••" required>
+
+                <label for="userRole">⚡ تحديد الصلاحية:</label>
+                <select id="userRole">
+                    <option value="معيد">معيد</option>
+                    <option value="مندوب دفعة">مندوب دفعة</option>
+                    <option value="مندوب سكشن">مندوب سكشن</option>
+                    <option value="دكتور">دكتور</option>
+                </select>
+
+                <button id="addUserBtn">إضافة</button>
+            </div>
+        </div>        
+    </div>
+
+    <script src="../assets/js/users.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - تقييم الأداء</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <!-- الشريط الجانبي -->
+        <aside class="sidebar">
+            <h2>M - SoftTech</h2>
+            <ul>
+                <li><a href="index.html">🏠 الرئيسية</a></li>
+                <li><a href="users.html">👥 إدارة المستخدمين</a></li>
+                <li><a href="tasks.html">📝 إدارة المهام</a></li>
+                <li><a href="performance.html">📊 تقييم الأداء</a></li>
+                <li><a href="settings.html">⚙️ الإعدادات</a></li>
+                <li><a href="support.html">📞 الدعم</a></li>
+                <li class="logout"><a href="#">🚪 تسجيل الخروج</a></li>
+            </ul>
+            <svg class="sidebar-curve" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 100">
+                <path fill="#2F6D5A" d="M0,0 Q100,50 250,100 L250,100 L0,100 Z"></path>
+            </svg>
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <header>
+                <h1>لوحة التحكم</h1>
+                <div class="user-info">
+                    <span id="user-role">دكتور</span>
+                    <img src="user-avatar.png" alt="User Avatar">
+                </div>
+            </header>
+
+            <section class="cards">
+                <div class="card" data-aos="fade-up">
+                    <h3>إجمالي المهام</h3>
+                    <p id="total-tasks">...</p>
+                </div>
+                <div class="card" data-aos="fade-up" data-aos-delay="100">
+                    <h3>المهام المكتملة</h3>
+                    <p id="completed-tasks">...</p>
+                </div>
+                <div class="card" data-aos="fade-up" data-aos-delay="200">
+                    <h3>طلبات المساعدة</h3>
+                    <p id="help-requests">...</p>
+                </div>
+            </section>
+
+            <section class="overview">
+                <div class="performance" data-aos="fade-right">
+                    <h3>تقييم الأداء</h3>
+                    <p id="performance-text">جارِ التحميل...</p>
+                </div>
+                <div class="chart" data-aos="zoom-in">
+                    <h3>نسبة إنجاز المهام</h3>
+                    <div class="progress-circle">
+                        <span id="task-percentage">...</span>
+                    </div>
+                </div>
+                <div class="activity" data-aos="fade-left">
+                    <h3>آخر الأنشطة</h3>
+                    <p id="activity-text">جارِ التحميل...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script>  AOS.init();</script>
+</body>
+</html>

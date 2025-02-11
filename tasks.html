@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المهام</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <h2>M - SoftTech</h2>
+            <ul>
+                <li><a href="index.html">🏠 الرئيسية</a></li>
+                <li><a href="users.html">👥 إدارة المستخدمين</a></li>
+                <li><a href="tasks.html">📝 إدارة المهام</a></li>
+                <li><a href="performance.html">📊 تقييم الأداء</a></li>
+                <li><a href="settings.html">⚙️ الإعدادات</a></li>
+                <li><a href="support.html">📞 الدعم</a></li>
+                <li class="logout"><a href="#">🚪 تسجيل الخروج</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1>إدارة المهام</h1>
+                <button id="openTaskModal">➕ إضافة مهمة جديدة</button>
+            </header>
+
+            <section class="task-list">
+                <h2>📋 قائمة المهام</h2>
+                <div id="tasks-container">
+                    <p>🚀 لا توجد مهام حاليًا، أضف واحدة جديدة!</p>
+                </div>
+            </section>
+            
+            <!-- 📌 قسم المهام الخاصة بالمستخدم الثاني -->
+            <section class="user-tasks">
+                <h3>📌 مهامي</h3>
+                <div id="userTasksContainer">
+                    <p>📝 لم تقم بأخذ أي مهمة بعد.</p>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+
+    <!-- 🔹 نافذة إضافة مهمة جديدة -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>إضافة مهمة جديدة</h2>
+
+            <label for="taskName">اسم المهمة:</label>
+            <input type="text" id="taskName" placeholder="أدخل اسم المهمة" required>
+
+            <label for="taskDescription">وصف المهمة:</label>
+            <textarea id="taskDescription" placeholder="أدخل وصف المهمة"></textarea>
+
+            <label for="taskVisibility">من يستطيع رؤية هذه المهمة؟</label>
+            <select id="taskVisibility">
+                <option value="معيد">معيد</option>
+                <option value="مندوب دفعة">مندوب دفعة</option>
+                <option value="مندوب سكشن">مندوب سكشن</option>
+                <option value="الكل">الكل</option>
+                <option value="مندوب دفعة و سكشن">مندوب دفعة و سكشن</option>
+            </select>
+
+            <button id="addTaskBtn">إضافة</button>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../api.js"></script>
+
+    <script>
+        document.getElementById("addTaskBtn").addEventListener("click", function () {
+            let taskName = document.getElementById("taskName").value;
+            let taskDescription = document.getElementById("taskDescription").value;
+
+            if (taskName.trim() === "" || taskDescription.trim() === "") {
+                alert("يرجى ملء جميع الحقول");
+                return;
+            }
+
+            let taskContainer = document.getElementById("taskContainer");
+
+            let taskElement = document.createElement("div");
+            taskElement.classList.add("task");
+
+            taskElement.innerHTML = `
+                <h4>${taskName}</h4>
+                <p>${taskDescription}</p>
+                <button class="get-task-btn" onclick="claimTask(this)">📌 الحصول على المهمة</button>
+            `;
+
+            taskContainer.appendChild(taskElement);
+
+            // إغلاق النافذة بعد الإضافة
+            document.getElementById("taskModal").style.display = "none";
+            document.getElementById("taskName").value = "";
+            document.getElementById("taskDescription").value = "";
+        });
+
+        function claimTask(button) {
+            let taskElement = button.parentElement;
+            let taskTitle = taskElement.querySelector("h4").innerText;
+            let taskDetails = taskElement.querySelector("p").innerText;
+
+            let userTasksList = document.getElementById("userTasksList");
+            let newTaskItem = document.createElement("li");
+            newTaskItem.innerHTML = `<strong>${taskTitle}</strong>: ${taskDetails}`;
+
+            userTasksList.appendChild(newTaskItem);
+
+            button.remove();
+            taskElement.style.opacity = "0.5";
+            taskElement.style.pointerEvents = "none";
+        }
+
+        document.querySelector(".close").addEventListener("click", function () {
+            document.getElementById("taskModal").style.display = "none";
+        });
+
+        document.getElementById("openTaskModal").addEventListener("click", function () {
+            document.getElementById("taskModal").style.display = "flex";
+        });
+    </script>
+</body>
+</html>
