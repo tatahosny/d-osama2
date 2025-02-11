@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إدارة المهام</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body>
 
@@ -30,17 +30,17 @@
 
             <section class="task-list">
                 <h2>📋 قائمة المهام</h2>
-                <div id="tasks-container">
+                <div id="tasksContainer">
                     <p>🚀 لا توجد مهام حاليًا، أضف واحدة جديدة!</p>
                 </div>
             </section>
             
-            <!-- 📌 قسم المهام الخاصة بالمستخدم الثاني -->
+            <!-- 📌 قسم المهام الخاصة بالمستخدم -->
             <section class="user-tasks">
                 <h3>📌 مهامي</h3>
-                <div id="userTasksContainer">
+                <ul id="userTasksList">
                     <p>📝 لم تقم بأخذ أي مهمة بعد.</p>
-                </div>
+                </ul>
             </section>
             
         </main>
@@ -51,6 +51,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>إضافة مهمة جديدة</h2>
+
 
             <label for="taskName">اسم المهمة:</label>
             <input type="text" id="taskName" placeholder="أدخل اسم المهمة" required>
@@ -71,62 +72,88 @@
         </div>
     </div>
 
-    <script src="main.js"></script>
-    <script src="auth.js"></script>
-    <script src="api.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../api.js"></script>
 
     <script>
-        document.getElementById("addTaskBtn").addEventListener("click", function () {
-            let taskName = document.getElementById("taskName").value;
-            let taskDescription = document.getElementById("taskDescription").value;
+        // عناصر HTML
+        const modal = document.getElementById("taskModal");
+        const openModalBtn = document.getElementById("openTaskModal");
+        const closeModalBtn = document.querySelector(".close");
+        const addTaskBtn = document.getElementById("addTaskBtn");
+        const tasksContainer = document.getElementById("tasksContainer");
+        const userTasksList = document.getElementById("userTasksList");
 
-            if (taskName.trim() === "" || taskDescription.trim() === "") {
+        // ✅ إظهار النافذة عند النقر على زر الإضافة
+        openModalBtn.addEventListener("click", function () {
+            modal.style.display = "flex";
+        });
+
+        // ✅ إغلاق النافذة عند النقر على زر الإغلاق
+        closeModalBtn.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        // ✅ إغلاق النافذة عند النقر خارجها
+        window.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        // ✅ إضافة مهمة جديدة
+        addTaskBtn.addEventListener("click", function () {
+            let taskName = document.getElementById("taskName").value.trim();
+            let taskDescription = document.getElementById("taskDescription").value.trim();
+            
+            if (taskName === "" || taskDescription === "") {
                 alert("يرجى ملء جميع الحقول");
                 return;
             }
 
-            let taskContainer = document.getElementById("taskContainer");
-
             let taskElement = document.createElement("div");
-            taskElement.classList.add("task");
-
+            taskElement.classList.add("task-card");
             taskElement.innerHTML = `
                 <h4>${taskName}</h4>
                 <p>${taskDescription}</p>
                 <button class="get-task-btn" onclick="claimTask(this)">📌 الحصول على المهمة</button>
             `;
 
-            taskContainer.appendChild(taskElement);
+            tasksContainer.appendChild(taskElement);
 
-            // إغلاق النافذة بعد الإضافة
-            document.getElementById("taskModal").style.display = "none";
+            // ✅ إخفاء النص الافتراضي
+            if (tasksContainer.querySelector("p")) {
+                tasksContainer.querySelector("p").style.display = "none";
+            }
+
+            // ✅ إغلاق المودال وتنظيف الحقول
+            modal.style.display = "none";
             document.getElementById("taskName").value = "";
             document.getElementById("taskDescription").value = "";
         });
 
+        // ✅ الحصول على المهمة ونقلها إلى "مهامي"
         function claimTask(button) {
             let taskElement = button.parentElement;
             let taskTitle = taskElement.querySelector("h4").innerText;
             let taskDetails = taskElement.querySelector("p").innerText;
 
-            let userTasksList = document.getElementById("userTasksList");
             let newTaskItem = document.createElement("li");
             newTaskItem.innerHTML = `<strong>${taskTitle}</strong>: ${taskDetails}`;
 
             userTasksList.appendChild(newTaskItem);
 
+            // ✅ تعطيل المهمة بعد أخذها
             button.remove();
             taskElement.style.opacity = "0.5";
             taskElement.style.pointerEvents = "none";
+
+            // ✅ إخفاء النص الافتراضي
+            if (userTasksList.querySelector("p")) {
+                userTasksList.querySelector("p").style.display = "none";
+            }
         }
-
-        document.querySelector(".close").addEventListener("click", function () {
-            document.getElementById("taskModal").style.display = "none";
-        });
-
-        document.getElementById("openTaskModal").addEventListener("click", function () {
-            document.getElementById("taskModal").style.display = "flex";
-        });
     </script>
 </body>
 </html>
