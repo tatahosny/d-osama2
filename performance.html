@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تقييم الأداء</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body>
 
@@ -16,7 +15,7 @@
                 <li><a href="index.html">🏠 الرئيسية</a></li>
                 <li><a href="users.html">👥 إدارة المستخدمين</a></li>
                 <li><a href="tasks.html">📝 إدارة المهام</a></li>
-                <li><a href="performance.html">📊 تقييم الأداء</a></li>
+                <li><a href="performance.html" class="active">📊 تقييم الأداء</a></li>
                 <li><a href="settings.html">⚙️ الإعدادات</a></li>
                 <li><a href="support.html">📞 الدعم</a></li>
                 <li class="logout"><a href="#">🚪 تسجيل الخروج</a></li>
@@ -28,25 +27,82 @@
                 <h1>تقييم الأداء</h1>
             </header>
 
-            <section class="chart-container">
-                <canvas id="performanceChart"></canvas>
+            <!-- ✅ قوائم تقييم الأداء -->
+            <section class="performance-lists">
+                <div class="list">
+                    <h2>📌 قائمة المعيدين</h2>
+                    <ul id="assistantList"></ul>
+                </div>
+                <div class="list">
+                    <h2>📌 قائمة مندوبين الدفعة</h2>
+                    <ul id="batchRepList"></ul>
+                </div>
+                <div class="list">
+                    <h2>📌 قائمة مندوبين السكاشن</h2>
+                    <ul id="sectionRepList"></ul>
+                </div>
             </section>
         </main>
     </div>
 
     <script>
-        var ctx = document.getElementById('performanceChart').getContext('2d');
-        var performanceChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['دكتور', 'معيد', 'مندوب دفعة', 'مندوب سكشن'],
-                datasets: [{
-                    label: 'عدد المهام المكتملة',
-                    data: [10, 15, 8, 20],
-                    backgroundColor: ['red', 'blue', 'green', 'purple']
-                }]
-            }
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("get_performance.php")
+                .then(response => response.json())
+                .then(data => {
+                    populateList("assistantList", data.assistants);
+                    populateList("batchRepList", data.batchReps);
+                    populateList("sectionRepList", data.sectionReps);
+                })
+                .catch(error => console.error("Error fetching data:", error));
         });
+
+        function populateList(elementId, usersList) {
+            const listElement = document.getElementById(elementId);
+            listElement.innerHTML = "";
+            usersList.forEach(user => {
+                let listItem = document.createElement("li");
+                let status = user.completedTasks > 0 ? "✅ نشط" : "❌ غير نشط";
+                listItem.textContent = `${user.name} - 📝 ${user.completedTasks} / ${user.totalTasks} مهام - ${status}`;
+                listElement.appendChild(listItem);
+            });
+        }
     </script>
+
+    <style>
+        .performance-lists {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .list {
+            width: 30%;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .list h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .list ul li {
+            background: #fff;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
 </body>
 </html>
